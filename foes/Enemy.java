@@ -27,6 +27,14 @@ public class Enemy {
     public int getHealth() {
 	return this.health;
     }
+	
+    public int getArmorClass() {
+        return this.armorClass;
+    }
+
+    public void setArmorClass(int armorClass) {
+        this.armorClass = armorClass;
+    }
 
     public int getToHit() {
 	return this.toHit;
