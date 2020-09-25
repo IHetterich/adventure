@@ -2,10 +2,7 @@ package foes;
 
 public class Zombie extends Enemy {
 
-    public Zombie(int location){
-	super(location);
-	health = 15;
-	armorClass = 12;
-	toHit = 3;
+    public Zombie() {
+	super("Zombie", 12, 15, 3, 3);
     }
 }

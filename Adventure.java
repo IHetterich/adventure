@@ -1,27 +1,23 @@
 import foes.*;
 import java.util.*;
-import java.util.ArrayList;
 
-public class Adventure{
+public class Adventure { 
 
     public static Room currentRoom;
     
     public static void main(String[] args){
 	Scanner input = new Scanner(System.in);
-	//Dice dice = new Dice();
 	PlayerCharacter player = new PlayerCharacter();
+	Room currentRoom;
+	Map.makeDoors();
 	currentRoom = Map.mouth;
+	currentRoom.visit();	
 	String action;
 
-	Zombie one = new Zombie(1);
-	System.out.println(one.location);
-	player.creation();
-	Map.makeDoors();
-	Map.mouth.adjRooms.add(Map.temple);
-
-	player.tutorial();
+     	player.creation();
+	player.tutorial(currentRoom);
         
-	while(currentRoom.victory != 1){
+	while(!currentRoom.victory || !currentRoom.clear) {
 	    System.out.println("So what do you do adventurer?");
 
 	    action = input.nextLine();
@@ -29,16 +25,23 @@ public class Adventure{
 	    
 	    switch(action){
 	    case "look":
-		currentRoom.visit();
+		currentRoom.look();
 		break;
 	    case "move":
-		player.move();
+		currentRoom = Map.move(currentRoom);
+		currentRoom.visit();
+		currentRoom.look();
 		break;
 	    case "attack":
-		player.attack();
+		player.attack(currentRoom);
+	        player.hitPoints = AI.enemyTurn(player, currentRoom);
+		currentRoom.clearTest();
+		break;
+	    case "status":
+		player.status();
 		break;
 	    default:
-		System.out.println("Your options are Look, Move, and Attack");
+		System.out.println("Your options are Look, Move, Status, and Attack");
 		break;
 	    }
 	}
